@@ -1,0 +1,115 @@
+Application: Simple Free-Form Object List Editor 'SFFOLE', pronouced 'Siffol'
+
+--------
+
+Browser Application:
+
+Menu Bar:
+> New [1]
+> Open [2]
+> Exit [3]
+> Export Tab-Delimited [11]
+
+> Targeted Path : Text showing path of current JSON document being written to / read from. [4]
+----
+"Target Path and Menu Bar" collapsable, static on top.
+
+
+Tab Container:
+> First Tab: "Data Entry Grid".
+
+  Header Row:
+  > List of all 'Properties' in header cells left-to-right.
+  > Delete-Property button in each 'Property' header cell. [12]
+  > Blank Property Field with 'Add' button - to far right [5]
+
+  Data Rows:
+  > All ng-draggable
+  > 'Highlight' upon selection-for-editing.
+  > 'Accept Changes' button appears to far left when row is selected.
+  > 'Delete Row' button appears to far left when row is unselected. [6]
+  > Lists Values of Properties of each 'Entry' in Cells under respective columns
+  > All 'Enter Value', 'Delete Value' buttons disabled until row is selected.
+  > Upon click-off of a row, file is saved.
+
+    Cells:
+    > Values in Cells displayed as an X-button-list inside cell. [7]
+    > All Cell Value X-Button Delete Buttons locked until parent Data Row is selected.
+    > Cell Value Entry Field: Empty text field displayed underneath X-button-list of values. ('+ Button' next to entry field) [8]
+    > Cell Value Entry Field disabled until parent Data Row is selected.
+
+> Second Tab: "Search and Retrival"
+
+  Object Properties Row:
+  > List of all 'Properties' left-to-right (Same as Header Row in Data Grid above) [8]
+  
+  Value Search Row:
+  > Buttons to Far left (in "Utility Cell"): Search, Reset. [9]
+  
+    Cells:
+    > Entered search terms displayed as X-buttons.
+    > Auto-Complete Value entry box, with "+" button immediately to right. [10]
+  
+  [> Visual Spacer... Large ellipsis]
+  
+  Search Return Rows
+  > Lists Values of Properties of each 'Entry' in Cells under respective columns
+  > Row highlights upon click.
+  
+    Cells:
+    > Values in Cells displayed as an Bubble-button-list inside cell.
+
+--------
+
+File Spec:
+
+SFFOLE files are JSON files with the following Schema:
+
+
+[ /* Main Array of "Entries" */
+  {
+    "first property" : [
+      "FP first value",
+      "FP second value",
+      "FP third value",
+      (...)
+      /* As many Values as desired... */
+    ],
+    "second property" : [
+    ],
+    (...)
+    /* As many Properties as desired...
+    ...determined by Add/Remove Buttons in Header Row */
+  }, 
+  (...)
+  /* As many Entries as desired...
+  ... All Entries will have the same 'Properties'...
+  ... added across all Entries (intialized empty) via the "Blank Property Field"*/
+]
+
+--------
+
+Functionality Details:
+
+"Header Row + Data Rows" is referred to as 'The Grid'
+Original State of The Grid is an unpopulated Header Row, with only the Blank Property Text Field displayed, and no Data Rows. The Grid is also greyed-out.
+Only options (and active buttons) are 'New', 'Open', and 'Exit'.
+
+[1] New File will create new SFFOLE JSON data in memory with [X] Properties and [X] Entries, open a File Explorer 'Save' prompt, and write that SFFOLE data to a JSON document at the provided destination.
+Then, SFFOLE will open that newly-created document.
+
+[2] Open File used to select target JSON file.
+If data is present in File is congruent with SFFOLE spec, file will open and extract File's SFFOLE-compatible JSON data to the browser JS memory.
+Errors in opening file are displayed in a popup, opening fails, back to Original State.
+
+[3] Exit will save current SFFOLE data to target file and exit the browser.
+
+[4] No further details required. See summary description note above.
+
+[5] Once Entered, SFFOLE will iterate over each Entry, and add the entered property onto it.
+
+[6] Delete Button deletes entire Entry.
+
+[7] Pressing 'X' in X-Button removes value from target Array Property of target Entry.
+
+[8] Pressing '+' next to text-entry field adds entered value to target Array Property of target Entry.
