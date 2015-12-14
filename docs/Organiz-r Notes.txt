@@ -1,0 +1,7 @@
+Watching Blasting Off With Bootstrap ("BOWBS"):
+
+There is no need for centering or styling, i.e. "container" class.
+The point of Organiz-r is to manage large amounts of tabular data.
+Therefore, i imagime its UI being as expansive as possible... well-colored, clean, attractive, etc... but at the same time, clear, uncluttered, and as *Large* as possible.
+Chrome (for the sake of Resume Ahhhs) can go in menus, etc.
+Might be cool to make said menus VERY boot-strapish - maybe 'Linear' / 'Technological' / 'Mirror's edge-ish' menus? Think Less-Rounded buttons, dog-eared buttons, and Tesla-Motors-Ish script.
