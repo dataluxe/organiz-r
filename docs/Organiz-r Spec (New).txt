@@ -1,0 +1,57 @@
+Upon Opening:
+
+OGR will present a full-lightboxed large-modal, the [Opening Modal] OM.
+
+The OM will present a simple welcome message, large 'Create New' & 'Open OGR File' buttons, a text field, and an alert area.
+
+Pressing 'Create New' will open a browser window, which will be used to select a path to place the OGR file in, or a file.
+> Upon accepting the browser window, the desired path / path-&-file will be placed in the text-field, a success message will be placed in the message area, along with a text 'working ellipsis' and a short countdown will expire before the Opening Modal is dismissed, and the [Entry Grid] is presented.
+[Possible to select just a path?]
+
+Pressing 'Open OGR File' will open a browser window, which will be used to select a file.
+> Upon selecting, OGR will parse the file for OGR format. If the format is correct the OM will be dismissed and the OGR file will be loaded into the [Entry Grid]. If the format is incorrect, an error message will be displayed in the modal.
+
+[Later: Auto-Save timer, Open-From-Server infrastructure, temp-file backup]
+
+Gridspace:
+
+The main workspace of OGR is called the 'Gridspace'. It consists of two tabular workspaces; the [Entry Grid] EG is used for entering information, and the [Search Grid] SG is used for retrieving information entered in the EG. The EG and SG each occupy the entire window, and so they are shown one-at-a-time. Meta-tools will be included in some kind of menu (Menu Modal), or On-Screen (Alert bar, Gridspace-switcher) as appropriate.
+[Specifics of the 'Menu' can be figured out later as the UI takes shape.]
+
+The Cube:
+
+The Cube is an object, mutable within parameters explained below, which represents the totality of data that a given OGR projects loads into the Gridspace, and manipulates & searches in grids. A blank Cube is created upon creation of a 'new' OGR File. An existing Cube is loaded (in JSON format) when an Organiz-r File is loaded. The Cube is edited in the EG, and searched in the SG.
+
+For the sake of technical documentation, a Cube combined with UI metadata / project metadata is called an [Organiz-r File].
+
+"The Cube" is merely a concept used in technical documentation. To the end-user, the concept of a 'Cube' is called an 'Organiz-r Project' or 'Organiz-r File'.
+
+As reflected by the tabular UI of the Gridspaces, the Cube contains the following facets:
+> The Cube is a list of objects with an identical number of properties, but variable values within each property.
+> Each 'object' is represented by a row in the EG.
+> Each 'property' is represented by a column in the EG, with the property's name being the column name.
+> Each 'value' is shown for each object (row), in the corresponding cell (column).
+> When a 'column' is added / removed / renamed, the corresponding property is added / removed / renamed across ALL objects in The Cube.
+> When a 'row' is added / removed / reordered, the corresponding object is added / removed / reordered in the Cube.
+
+The cube's structure is represented by the following JSON schema:
+
+
+Entry Grid:
+
+The EG is a simple tabular space for editing the Cube. The user can add & rename & delete columns, add & delete (& reorder?) rows, and add & remove values to cells, assisted by an auto-complete feature, which will allow auto-completion against the unique list of all other values entered in all cells across that entire column.
+
+- Architecture Note: This entire Cube can be stored as a JSON object, and all operations can be done against that object.
+- UI Notes: Columns should shrink to the header width, expand to a Max size, and have the option to be 'minimized'. Rows should fit height up to a maximum, and be 'auto-minimized' if empty. The 'New Column' entry column should occupy a minimum width of the Entry text field.
+- Usability Notes: Rows should be 'draggable'. Currently, all values are entered & interpreted as 'strings'. Each row should be 'deletable' with a simple click, perhaps a button on the far left.
+
+
+Search Grid:
+
+The SG, whose UI is similar to that of the EG, is a tabular workspace used for retrieving-displaying rows from the Cube based upon search criteria entered within it.
+
+The SG first presents two rows - The header row of entered columns, and one row beneath it, as with the layout of the first two rows in the EG.
+> The first row merely displays all 'columns'. Each column has a button which 'deactivates' it, greying it out and removing it from the consideration in a search. Columns can also be minimized, as in the EG.
+> The second row, is merely a row in which values can be entered (still utilizing auto-complete) in each cell. These values combined comprise an 'inclusive' search criterion.
+
+The SG then presents the 'Search Results' in a table immediately following the two 'Search Rows'. Either upon a button-press or automatically, all 'rows' (objects in the Cube) will be returned in a static (non-editable) tabular format visually similar to that of the EG, with all columns of the 'Search Results' aligned with and opened / minimized identically to the columns in the 'Search Rows'.
