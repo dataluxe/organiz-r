@@ -1,0 +1,89 @@
+Taskbar at top:
+Left:
+- 'Organiz-r' brand tile.
+- Edit: Changes main view to 'Entry Grid'
+- Query: Changes main view to 'Search Grid'
+Right:
+- Save: Saves changes to file.
+- Open: Prompt for save [Yes: Save | No: Proceed], Changes main view to 'Start Screen', Opens browser [Failure: Message, Return to 'Start Screen' | Success: Load and switch to Entry Grid]
+- New: Prompt for save [Yes: Save | No: Proceed], creates new empty OGR, changes view to 'Entry Grid'.
+- Close: Prompt for save [Yes: Save | No: Proceed] Changes Main view to 'Start Screen'
+
+Start Screen: Dark screen, simple tile centered in middle. Top to bottom: OGR logo, tagline. Buttons, wide, 2x2 [New, Open, About, Exit].
+- New as above [No prompt for save b/c no open file].
+- Open as above [No prompt for save b/c no open file]
+- About switches main view to 'About Screen'.
+- Exit closes window.
+
+About Screen: Dark screen, centered tile. Explanation of OGR.
+
+Entry Grid - scrollable area.
+
+Search Grid:
+
+
+--
+
+Entry Grid
+
+<Entry Grid optimize test / ponder>
+
+Save/Load/New Page (local)
+
+Search Grid
+
+Entry Grid Optimize complete.
+
+> New checkpoints will probably arise by here. Probably...
+
+Hosting on AWS (local)
+
+Delivery of current App via AWS - Node?
+
+Delivery via Node.
+
+Authentication System, OGR Database in AWS. UI in OGR to select from server, save to server.
+
+--
+
+"Perfect" end goal:
+
+Full App. (Performance problem solved.)
+Custom Bootstrap.
+Full aminations.
+Sexy Three-Screen UI.
+Authentication.
+Selection of project from server.
+Saving project to server.
+
+--
+
+Performance problem - need to look into angular docs and internet resources to see which mechanisms in the NG refresh loop / directives create lag - then, look for a way to eliminate those.
+
+Principle: Angular is based around *every* binding being a two-way binding. This is fundamentally at odds with a list-based UI. In a list-based, tabular UI which is presenting a large dataset, only one row (object) at a time in that list will actively be being 'edited' (meriting a realtime change in the UI), yet *many* NG bindings will be created, slowing its $digest loop down to an unacceptably slow speed.
+
+I still wish to "render" a large table of data, but do not require the view to refresh based upon changes to the model (or vice versa) for rows in the table, except in a few specific situations.
+
+--
+
+Rows will start inactive, become active once clicked on, and inactive when clicked off. In my inactive rows, I only wish to retrieve data from the model and display it the view, because the data which that row is based upon (specifically, an Object in the main array of the OGR "Cube") will not change. In active rows, I want to leverage NG's realtime watching-and-refreshing capabilities to immediately update the view (namely the lists of Values in Cells) based upon my addition or deletion of values.
+
+(Specialty cases like the addition or deletion of an entire column MAY be handled with a special "NG-repaint")
+
+So, there are two main remaining problems...
+> How to render the 'inactive' rows in a performant manner. I already know how to design an NG system to display them, but this would(?) create several $$watchers which would severely lag the $digest cycle. I suspect there is a simple, Angular-compliant way to do this (ng-bind vs ng-model, {{::}} one-time-binding expressions), but I need to confirm.
+> How to render 'active' rows - do I replace the inactive rows entirely, template-expand them with 'active-row' elements... how I implement this depends strongly upon how I implement the 'Inactive' rows, and the overlap in structure between them and the active rows.
+
+... And two lesser problems...
+> How to gracefully include a desirable 'new row' mechanism, in which I would like to ?????????? <Fill in more here - what's the desired 'New Row' interface and behavior> ??????????
+> How to add/delete entire columns, in which I would like 1) all rows to be 'inactive', and 2) to update the entire grid, removing the column from all rows in realtime.
+
+--
+
+OTHER DESIGN DECISIONS:
+
+*Do* include Autocomplete.
+No Sorting the Edit/Search grids.
+No Dragging rows.
+Probably no need for an behind-the-scenes numerical 'imperical' index on Row objects.
+No multiple-datatypes - strings only.

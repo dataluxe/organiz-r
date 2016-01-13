@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="/vendor/angular/angular.min.js"></script>
+</head>
+<!--TDO Meta tags in head. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta-->
+<!--TDO Title tag in head.-->
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Organiz-r</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">Query</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Save</a></li>
+            <li><a href="#">Open</a></li>
+            <li><a href="#">New</a></li>
+            <li><a href="#">Close</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+<!--
+App is simple enough that everything can be stored on the root scope.
+For now, start by putting everything inside index.html.
+If a requisite amount of semantic structure presents itself, split elements out into directives as necessary.
+At the end, separate pages out into directives if desired for cleanliness.
+-->
+
+<div class="container-fluid"></div> <!--Main container for Start Page - ng-show later-->
+
+
+<!--Main container for Entry Grid-->
+<div class="container-fluid">
+    <table class="table">
+        <tr>
+            <th></th> <!--Columns Here - ng-repeat'd per The Cube-->
+        </tr>
+
+        <tr> <!--Rows Here-->
+            <td></td> <!--Cells Here-->
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="container-fluid"></div> <!--Main container for Query - ng-show later-->
+
+</body>
+
+</html>

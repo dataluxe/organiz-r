@@ -41,7 +41,6 @@ Entry Grid:
 
 The EG is a simple tabular space for editing the Cube. The user can add & rename & delete columns, add & delete (& reorder?) rows, and add & remove values to cells, assisted by an auto-complete feature, which will allow auto-completion against the unique list of all other values entered in all cells across that entire column.
 
-- Architecture Note: This entire Cube can be stored as a JSON object, and all operations can be done against that object.
 - UI Notes: Columns should shrink to the header width, expand to a Max size, and have the option to be 'minimized'. Rows should fit height up to a maximum, and be 'auto-minimized' if empty. The 'New Column' entry column should occupy a minimum width of the Entry text field.
 - Usability Notes: Rows should be 'draggable'. Currently, all values are entered & interpreted as 'strings'. Each row should be 'deletable' with a simple click, perhaps a button on the far left.
 
