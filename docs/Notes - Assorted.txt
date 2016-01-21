@@ -1,10 +1,100 @@
+> Add Per-Value-Delete buttons.
+> Wire up Per-Value-Delete-buttons to delete() function.
+> Add Per-Cell-Add buttons.
+> Wire up Per-Cell-Add buttons to add() function.
+> Add Per-Column-Delete buttons.
+> Wire up Per-Column-Delete buttons to ColumnDelete() function.
+> Add Column-Add Cell-and-Input.
+> Wire up Column-Add Input to ColumnAdd() function.
+> Add New-Row-Add row.
+> Wire up New-Row-Add row to RowAdd() function'.
+> Add Row-Delete Column and Buttons.
+> Wire up Row-Delete Buttons to RowDelete() function.
+
+All ^^^ On Controller.
+Real-time check to make sure Cube / CubeProeprties is being altered correctly.
+Stress test.
+Experiment if one-time bindings reflect realtime changes to Cube.
+Do Table CSS.
+? Build out other pages || Simple save/load || keep working on Grid as below "Here's what I want section"
+
+Here's what i want:
+> All rows are displayed in 'inactive state'.
+  - Just values are visible, row has inactive styling, no Add Value fields/buttons in cells.
+  - (Controls to add/remove columns are still visible and operational.)
+  - (Controls to add/remove rows are still visible and operational.)
+> Rows highlight when I mouse over them.
+> When I click a row, the row is now in "Active" state.
+  - Styling changes from 'inactive' to 'active'.
+  - The Cell-level controls to 'add cell values' appear.
+  - The Per-Value-Delete buttons appear.
+> Rows can be closed in two ways:
+1) Clicking on another row in the grid will save the changes to the current row, return the current to 'inactive' state, and put the clicked row in 'active' state, as described above.
+2) ?? Other options can simply save changes in the current row and return it to 'inactive' state:
+  - Key + Click (message this when row is open?)
+  - Right Click (message this when row is open?)
+  - 'Check Mark' button in top left empty cell of table, to the left of the column heading row.'
+
+Solutions:
+Seems like the Add Value/ Delete value buttons need to be added by some kind of function at-point-in-time.
+ng-if is the best solution, and yet even it falls short - putting an ng-if at each point where a control would be required would just create another watch, which fails to achieve the goal os *eliminating* watches.
+
+So, i can have the table rendered with typical NG-repeats. However, each Row will be a directive:
+The Directive will 'summon' one of two templates via a technique similar to this: http://onehungrymind.com/angularjs-dynamic-templates/
+... only click-based, and not preset-template-fetched-via-a-match-to-data-based.
+!!Since this technique hinges on '$compile', i have to make sure that the SCOPE of the "ng-repeat's row" gets passed properly into the $compile function.
+One template will be the inactive row, and will somehow be set as the default template.
+The other template will be the 'active' row with the bindings.
+
+!!WAIT!!
+
+The primary concern is that I'd create tons of $watches (and this a bloated $digest cycle) by adding an ng-bind/ng-model in each cell for the AddValue box.
+However, I may be able to simply have a text-enter box, and call an HTML onClick() function which takes the HTML <text> attribute from the element at-the-point-of-click, and adds it to the cube.
+?? Would that function HAVE to go in the link() function, since it accesses the <element>
+?? Use ng-click or just HTML onClick()? What does ng-click give me? Does ng-click make a watch, thus destroying all my original planning?
+?? If the function has to go in a link() function, that means (the cell? The entire table?) has to be a directive, correct?
+
+!!!
+Assuming all those questions work out in my favor, then i may not have to even bother with an 'active/inactive' row architecture.
+So, if all is well with the All-Open architecture above, DO I WANT to have an Active-Inactive architecture?
+!!!
+
+> Add page to display whole cube
+> Add Per-Value-Delete buttons.
+> Wire up Per-Value-Delete-buttons to delete() function.
+> Add Per-Cell-Add buttons.
+> Wire up Per-Cell-Add buttons to add() function.
+See how cube reacts
+
+Try all this shit in order ^^
+
+Move on to directive-izing if it seems to have benefits... MAY NEED to study how to render different pages first.
+
+!!!NG-IF WILL work for tab selection - only 3(?) watches.
+
+
 Watching Blasting Off With Bootstrap ("BOWBS"):
 
 There is no need for centering or styling, i.e. "container" class.
 The point of Organiz-r is to manage large amounts of tabular data.
-Therefore, i imagime its UI being as expansive as possible... well-colored, clean, attractive, etc... but at the same time, clear, uncluttered, and as *Large* as possible.
+Therefore, i imagine its UI being as expansive as possible... well-colored, clean, attractive, etc... but at the same time, clear, uncluttered, and as *Large* as possible.
 Chrome (for the sake of Resume Ahhhs) can go in menus, etc.
 Might be cool to make said menus VERY boot-strapish - maybe 'Linear' / 'Technological' / 'Mirror's edge-ish' menus? Think Less-Rounded buttons, dog-eared buttons, and Tesla-Motors-Ish script.
 
 Thinking: Collapsible Menu Bar, settings / Other Modes (edit vs Search) / Help via symbols in bar.
 Any non-gridspace modes should be done via models, which lightbox over the current gridspace.
+
+
+
+CSS:
+ EZ
+ > Min, max value button width
+ > Min, Max column width
+ > Static width for 'New Row' boxes, 'New Column' box.
+ > Minimum width for 'New Value' boxes.
+ Hared
+ > Custom padding on buttons - fewer / smaller gutters
+ > Custom padding on tables
+ Project
+ > Figure out proper BS item nesting, especially RE: tables
+ > Figure out button padding - why is the button staking right next to the text?

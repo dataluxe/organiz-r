@@ -1,0 +1,40 @@
+--Early Experiments in Index.html - attempting to see if in-index angular-annotated html would bind to Scope variables in the directive.
+--Will possibly give on more try by incorporating Controllers: http://stackoverflow.com/questions/15273404/name-in-angular-directive-definition
+--Decided to stop for now because i do not know *specifically* *why* I'd need this functionality, and I will be better able to investigate any parts of this question which still apply to my inquiry when I have completed more attempts at building it.
+
+index.html:
+<div class="row col-lg-12">
+    Root Scope | Input from below: [ {{test || "-Nothing-"}} ] <br>
+    <input ng-model="test" type="text"/>
+</div>
+
+<div class="row col-lg-12">---<ogr-td-one>
+
+<ogr-td-zero></ogr-td-zero>
+
+<ogr-td-one class="row column col-lg-6">
+    Non-Template Directive | Input from below: [ {{scope.name || "-Empty-"}} ] <br>
+    <input ng-model="name" type="text"/>
+</ogr-td-one>
+
+app.js:
+.directive("ogrTdZero", function() {
+    return {
+        restrict: "E",
+        template: "<div class='row col-lg-6'>Full-Template Directive | Input from below: [ {{test || 'Nothing Here' }} ]<br><input ng-model='test' type='text'/></div>",
+        scope: {},
+        link: function(scope){
+            scope.test = "in Directive td-0";
+        }
+    };
+})
+
+.directive("ogrTdOne", function() {
+    return {
+        restrict: "E",
+        scope: {},
+        link: ['$scope', function($scope){
+            $scope.name = "in Directive td-1";
+        }]
+    };
+})

@@ -15,7 +15,7 @@ Start Screen: Dark screen, simple tile centered in middle. Top to bottom: OGR lo
 - About switches main view to 'About Screen'.
 - Exit closes window.
 
-About Screen: Dark screen, centered tile. Explanation of OGR.
+About Screen: Dark screen, centered tile. Explanation of OGR, EXPLANATION of desired screen resolution, intentionally NO mobile support "Let us not pretend that our mobile phone and iPads are the futuristic, in-head augmented-reality displays that we dream of. OGR is a tool which is meant to support workflows which, by their nature, will done in a NON-mobile setting.".
 
 Entry Grid - scrollable area.
 

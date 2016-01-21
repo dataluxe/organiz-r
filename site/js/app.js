@@ -1,6 +1,97 @@
-var app = angular.module('organizr', []);
+angular.module('organizr', [])
 
-/*The Cube Package so far:
+.controller('TableController', [function() {
+    this.cubeProperties = [ //Contrived cubeProperties to thrash until Installation of "Real Cube" code.
+        "House Address",
+        "Manager",
+        "Utilities",
+        "Amenities",
+        "Property Type",
+        "Rent Amount / Unit"
+        ];
+
+
+    this.cube = [ //Example cube to thrash until Installation of "Real Cube" code.
+        {
+            "House Address" : ["510 NE 123rd St Seattle WA 98125"]
+            , "Manager" : ["Thomas Knowles"]
+            , "Utilities" : ["Gas Heat", "Electric Water Heater", "Electric Range", "Internet", "Phone"]
+            , "Amenities": ["Small Front Yard", "Large Back Yard", "Wood Shed", "Covered Rear Porch", "Hardwood Floors"]
+            , "Property Type" : ["Single Family","No Pets"]
+            , "Rent Amount / Unit" : ["1850.00"]
+        },{
+            "House Address" : ["11316 2nd Ave NW Seattle WA 98125"]
+            , "Manager" : ["Thomas Knowles"]
+            , "Utilities" : ["Gas Heat", "Electric Water Heater", "Electric Range", "Internet", "Phone"]
+            , "Amenities": ["Medium Front Yard", "Medium Back Yard", "Back Patio", "Covered Front Porch", "Hardwood Floors"]
+            , "Property Type" : ["Single Family"]
+            , "Rent Amount / Unit" : ["1850.00"]
+        },{
+            "House Address" : ["11410 Roosevelt Way NE Seattle WA 98125"]
+            , "Manager" : ["Danny Phung"]
+            , "Utilities" : ["Electric HVAC", "Electric Water Heater", "Electric Range", "Internet"]
+            , "Amenities": ["Medium Back Yard", "Covered Back Patio", "Second-Story Deck", "Hardwood Floors", "Skylights"]
+            , "Property Type" : ["Double-Family Duplex"]
+            , "Rent Amount / Unit" : ["1700.00"]
+        },{
+            "House Address" : ["11716 8th Ave NE Seattle WA 98125"]
+            , "Manager" : ["Danny Phung"]
+            , "Utilities" : ["Electric HVAC", "Electric Water Heater", "Electric Range", "Internet", "Phone", "Cable"]
+            , "Amenities": ["Medium Back Yard", "Second-Story Deck", "Hardwood Floors", "Skylights", "Single-Car Garage"]
+            , "Property Type" : ["Four-Family Quadplex"]
+            , "Rent Amount / Unit" : ["1600.00"]
+        },{
+            "House Address" : ["2330 N 122nd St Seattle WA 98133"]
+            , "Manager" : ["Anna Alexeyev"]
+            , "Utilities" : ["Electric Heat", "Electric Water Heater", "Electric Range", "Internet"]
+            , "Amenities": ["Covered Designated Parking", "Hardwood Floors"]
+            , "Property Type" : ["Six-Unit Apartment"]
+            , "Rent Amount / Unit" : ["1200.00"]
+        },{
+            "House Address" : ["12028 1st Ave NE Seattle WA 98125"]
+            , "Manager" : ["Anna Alexeyev"]
+            , "Utilities" : ["Electric HVAC", "Gas On-Demand Water Heater", "Gas Range", "Internet", "Phone", "Cable"]
+            , "Amenities": ["Large Dinner Patio", "Three-Car Garage", "Large Back Yard", "Large Front Yard", "Outbuilding", "Tile Floors", "Skylights"]
+            , "Property Type" : ["Single Family"]
+            , "Rent Amount / Unit" : ["2700.00"]
+        },{
+            "House Address" : ["16203 6th Ave NE Shoreline WA 98155"]
+            , "Manager" : ["Thomas Knowles"]
+            , "Utilities" : ["Gas Heat", "Gas Water Heater", "Gas Range", "Internet", "Phone", "Cable"]
+            , "Amenities": ["Tile Floors", "Hardwood Floors", "Single-Car Garage w/ Storage", "Medium Back Yard", "Small Front Yard", "Patio"]
+            , "Property Type" : ["Double-Family Duplex"]
+            , "Rent Amount / Unit" : ["1800"]
+        }
+    ];
+
+    this.cellRemoveValue = function(){
+        console.log("cellRemoveValue() fired in TableController.");
+    };
+
+    this.cellAddValue = function(){
+        console.log("cellAddValue() fired in TableController.");
+    };
+
+    this.columnAdd = function(){
+        console.log("columnAdd() fired in TableController.");
+    };
+
+    this.rowRemove = function(){
+        console.log("rowRemove() fired in TableController.");
+    };
+
+    this.columnRemove = function(){
+        console.log("columnRemove() fired in TableController.");
+    };
+
+    this.rowAddNewRow = function(){
+        console.log("rowAddNewRow() fired in TableController.");
+    };
+
+}]);
+
+/*
+The Cube Package so far:
 filePath : <string> (& whatever other files are required for saving)
 cubeProperties: [<prop1>, <prop2>, <...>] (Validated upon Opening, Saving - later, cube always stored / returned as anonymous closure for security's sake)
 cube:[
@@ -17,18 +108,20 @@ Add cube[obj][prop][value] upon submit of 'value button' in cell.
 Delete cube[obj][prop][value] upon submit of 'value button' in cell.
 ** Preload autofill arrays? **
 
-*/
+Notes:
+Cube Package and all its CRUD(+Integrity) functions should be kept in a service.
 
-var cubeProperties = [ //Contrived cubeProperties to thrash until Installation of "Real Cube" code.
+
+$scope.cubeProperties = [ //Contrived cubeProperties to thrash until Installation of "Real Cube" code.
     "House Address",
     "Manager",
     "Utilities",
     "Amenities",
     "Property Type",
-    "Rent Amount / Mo"
+    "Rent Amount / Unit"
 ];
 
-var cube = [ //Example cube to thrash until Installation of "Real Cube" code.
+$scope.cube = [ //Example cube to thrash until Installation of "Real Cube" code.
     {
           "House Address" : ["510 NE 123rd St Seattle WA 98125"]
         , "Manager" : ["Thomas Knowles"]
@@ -80,3 +173,5 @@ var cube = [ //Example cube to thrash until Installation of "Real Cube" code.
         , "Rent Amount / Unit" : ["1800"]
     }
 ];
+
+*/

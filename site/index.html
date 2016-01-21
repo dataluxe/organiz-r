@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="Ograniz-r" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
-    <script type="text/javascript" src="/vendor/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../vendor/angular/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </head>
 <!--TDO Meta tags in head. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta-->
 <!--TDO Title tag in head.-->
 
-<body>
+<body ng-app="organizr">
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -38,25 +40,64 @@ If a requisite amount of semantic structure presents itself, split elements out 
 At the end, separate pages out into directives if desired for cleanliness.
 -->
 
-<div class="container-fluid"></div> <!--Main container for Start Page - ng-show later-->
+<!--<div class="container-fluid"></div> <!--Main container for Start Page - ng-show later-->
 
 
 <!--Main container for Entry Grid-->
 <div class="container-fluid">
-    <table class="table">
-        <tr>
-            <th></th> <!--Columns Here - ng-repeat'd per The Cube-->
-        </tr>
 
-        <tr> <!--Rows Here-->
-            <td></td> <!--Cells Here-->
-        </tr>
-    </table>
+        <table class="table" ng-controller="TableController as table">
+            <tr>
+                <th></th>
+
+                <th ng-repeat="heading in table.cubeProperties">
+                    {{heading}}
+                    <span class="btn btn-xs btn-danger pull-left" ng-click="table.columnRemove()"><span class="glyphicon glyphicon-remove"></span></span>
+                </th> <!--Columns Here - ng-repeat'd per The Cube-->
+
+                <th>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon" ng-click="table.columnAdd()"><span class="glyphicon glyphicon-plus"></span></span>
+                    </div>
+                </th>
+            </tr>
+
+            <tr ng-repeat="row in table.cube">
+                <td><div class="btn btn-danger" ng-click="table.rowRemove()"><span class="glyphicon glyphicon-remove"></span></div></td>
+                <td ng-repeat="(key, cell) in row">
+
+                    <div ng-repeat="value in cell" class="btn btn-sm btn-default">
+                        {{value}}
+                        <div class="btn btn-xs btn-danger" ng-click="table.cellRemoveValue()"><span class="glyphicon glyphicon-remove"></span></div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon" ng-click="table.cellAddValue()"><span class="glyphicon glyphicon-plus"></span></span>
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <tr>
+                <td><span class="btn btn-success">New Item:</span></td>
+                <td ng-repeat="property in table.cubeProperties">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon" ng-click="table.rowAddNewRow()"><span class="glyphicon glyphicon-plus"></span></span>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
 </div>
 
 
 
-<div class="container-fluid"></div> <!--Main container for Query - ng-show later-->
+<!--<div class="container-fluid"></div> <!--Main container for Query - ng-show later-->
 
 </body>
 
