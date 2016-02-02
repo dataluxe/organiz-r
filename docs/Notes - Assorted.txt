@@ -1,77 +1,65 @@
-> Add Per-Value-Delete buttons.
-> Wire up Per-Value-Delete-buttons to delete() function.
-> Add Per-Cell-Add buttons.
-> Wire up Per-Cell-Add buttons to add() function.
-> Add Per-Column-Delete buttons.
-> Wire up Per-Column-Delete buttons to ColumnDelete() function.
-> Add Column-Add Cell-and-Input.
-> Wire up Column-Add Input to ColumnAdd() function.
-> Add New-Row-Add row.
-> Wire up New-Row-Add row to RowAdd() function'.
-> Add Row-Delete Column and Buttons.
-> Wire up Row-Delete Buttons to RowDelete() function.
+LARGE TODOs:
+Query Page, Greeting/About Page
+> Look in to how to render other pages.
+Save/Load
+New, Close
+Auto-Complete
+Stress Test
+Pagination
+Table CSS (See 'Discussion' below)
 
-All ^^^ On Controller.
-Real-time check to make sure Cube / CubeProeprties is being altered correctly.
-Stress test.
-Experiment if one-time bindings reflect realtime changes to Cube.
-Do Table CSS.
-? Build out other pages || Simple save/load || keep working on Grid as below "Here's what I want section"
 
-Here's what i want:
-> All rows are displayed in 'inactive state'.
-  - Just values are visible, row has inactive styling, no Add Value fields/buttons in cells.
-  - (Controls to add/remove columns are still visible and operational.)
-  - (Controls to add/remove rows are still visible and operational.)
-> Rows highlight when I mouse over them.
-> When I click a row, the row is now in "Active" state.
-  - Styling changes from 'inactive' to 'active'.
-  - The Cell-level controls to 'add cell values' appear.
-  - The Per-Value-Delete buttons appear.
-> Rows can be closed in two ways:
-1) Clicking on another row in the grid will save the changes to the current row, return the current to 'inactive' state, and put the clicked row in 'active' state, as described above.
-2) ?? Other options can simply save changes in the current row and return it to 'inactive' state:
-  - Key + Click (message this when row is open?)
-  - Right Click (message this when row is open?)
-  - 'Check Mark' button in top left empty cell of table, to the left of the column heading row.'
+SMALL TODOs:
+Rename button on Columns.
+Validate Column, Value inputs.
 
-Solutions:
-Seems like the Add Value/ Delete value buttons need to be added by some kind of function at-point-in-time.
-ng-if is the best solution, and yet even it falls short - putting an ng-if at each point where a control would be required would just create another watch, which fails to achieve the goal os *eliminating* watches.
+Make Navbar Static, gradient-blended.
+Make New-Column Static right side, Collapsible.
+Make Delete-Row Static, Left Side.
+Make Column Headers Static on top, but scrollable horizontally.
+Remove ALL 'Mobile' functionality from BS - smallest screen size supported is screen-md.
 
-So, i can have the table rendered with typical NG-repeats. However, each Row will be a directive:
-The Directive will 'summon' one of two templates via a technique similar to this: http://onehungrymind.com/angularjs-dynamic-templates/
-... only click-based, and not preset-template-fetched-via-a-match-to-data-based.
-!!Since this technique hinges on '$compile', i have to make sure that the SCOPE of the "ng-repeat's row" gets passed properly into the $compile function.
-One template will be the inactive row, and will somehow be set as the default template.
-The other template will be the 'active' row with the bindings.
 
-!!WAIT!!
+-----------------
+-- DISCUSSIONS --
+-----------------
 
-The primary concern is that I'd create tons of $watches (and this a bloated $digest cycle) by adding an ng-bind/ng-model in each cell for the AddValue box.
-However, I may be able to simply have a text-enter box, and call an HTML onClick() function which takes the HTML <text> attribute from the element at-the-point-of-click, and adds it to the cube.
-?? Would that function HAVE to go in the link() function, since it accesses the <element>
-?? Use ng-click or just HTML onClick()? What does ng-click give me? Does ng-click make a watch, thus destroying all my original planning?
-?? If the function has to go in a link() function, that means (the cell? The entire table?) has to be a directive, correct?
+----------
+CSS Todos:
 
-!!!
-Assuming all those questions work out in my favor, then i may not have to even bother with an 'active/inactive' row architecture.
-So, if all is well with the All-Open architecture above, DO I WANT to have an Active-Inactive architecture?
-!!!
+ EZ
+ > Min, max value button width
+ > Min, Max column width
+ > Static width for 'New Row' boxes, 'New Column' box.
+ > Minimum width for 'New Value' boxes.
+ Hard
+ > Custom padding on buttons - fewer / smaller gutters
+ > Custom padding on tables
+ Project
+ > Figure out proper BS item nesting, especially RE: tables
+ > Figure out button padding - why is the button staking right next to the text?
 
-> Add page to display whole cube
-> Add Per-Value-Delete buttons.
-> Wire up Per-Value-Delete-buttons to delete() function.
-> Add Per-Cell-Add buttons.
-> Wire up Per-Cell-Add buttons to add() function.
-See how cube reacts
+-----------
+CSS Ideals:
 
-Try all this shit in order ^^
+- Columns Max Width. Tooltip for large names.
+- Modified Tile Inner, Outer gutters.
+ > Two States for Rows: 'Active (clicked)' and 'Inactive (Clicked off)'
+ Inactive:
+  - Value Tile Max Width - maybe two per row.
+  - Overflow in Value Tiles Ellipsis'd, Tooltip'd
+  - Value tiles limited to 2 (?) rows.
+  - Enter Button Hidden.
+  - Value-Tile Delete buttons hidden.
+ Active:
+  - All Value Tiles expanded. Delete Buttons visible.
+  - Overflowed Value Tiles Ellipsis'd, Tooltip'd.
+  - Add-Value Tiles Visible. Floated-bottom, if possible.
+Later: If possible, have different directives for 'Active' and 'Inactive' rows, and swap on-the-fly.
 
-Move on to directive-izing if it seems to have benefits... MAY NEED to study how to render different pages first.
 
-!!!NG-IF WILL work for tab selection - only 3(?) watches.
-
+--------------------------------
+Fanciful CSS "BOWBS" Discussion:
 
 Watching Blasting Off With Bootstrap ("BOWBS"):
 
@@ -85,16 +73,46 @@ Thinking: Collapsible Menu Bar, settings / Other Modes (edit vs Search) / Help v
 Any non-gridspace modes should be done via models, which lightbox over the current gridspace.
 
 
+-----------------------
+<ng-repeat> Discussion:
 
-CSS:
- EZ
- > Min, max value button width
- > Min, Max column width
- > Static width for 'New Row' boxes, 'New Column' box.
- > Minimum width for 'New Value' boxes.
- Hared
- > Custom padding on buttons - fewer / smaller gutters
- > Custom padding on tables
- Project
- > Figure out proper BS item nesting, especially RE: tables
- > Figure out button padding - why is the button staking right next to the text?
+Solutions:
+Seems like the Add Value/ Delete value buttons need to be added by some kind of function at-point-in-time.
+ng-if is the best solution, and yet even it falls short - putting an ng-if at each point where a control would be required would just create another watch, which fails to achieve the goal os *eliminating* watches.
+
+So, i can have the table rendered with typical NG-repeats. However, each Row will be a directive:
+The Directive will 'summon' one of two templates via a technique similar to this: http://onehungrymind.com/angularjs-dynamic-templates/
+... only click-based, and not preset-template-fetched-via-a-match-to-data-based.
+!!Since this technique hinges on '$compile', i have to make sure that the SCOPE of the "ng-repeat's row" gets passed properly into the $compile function.
+One template will be the inactive row, and will somehow be set as the default template.
+The other template will be the 'active' row with the bindings.
+
+2015-01-25
+Hold on:
+
+So... ng-repeat is necessary for display of the ROWS, because (even in row-edit, meh) the numbers of ROWS might change.
+  ... ng-repeat is necessary for the display of CELLS, because (even in row-edit), the numbers of CELLS might change.
+  ... ng-repeat is necessary for the display of VALUES, because the number of VALUES might change (particularly in row-edit).
+Furthermore, 'NG-REPEAT' is the necessary method to display these items because NG-REPEAT implicitly provides a SCOPE by which the child items can be easily rendered.
+
+SO, THERE IS NO WAY FOR ME TO HAVE A FINITE NUMBER OF $WATCHES IN THE EDIT GRID - the number of watches will always grow with 'The Cube'.
+- A Single ng-repeat is merely ONE watch, but if you have an Angular component which generates any other kind of $watch inside that repeat, you will then have a number of watches which grows with the number of repeated elements.
+- ... and *I* *will* need nested ng-repeats to render the Row -> Cell -> Value structure.
+- ... and, I display $watch'd values inside the VALUES, anyways.
+So, this means that the only way to ensure that the $DIGEST cycle won't bloat is to enforce limits upon it.
+... which means I must limit the number of VALUES in a CELL, and CELLS on a page (by limiting the number of COLUMNS and ROWS, whose product determines the number of CELLS)
+
+>>
+The only time when NG-REPEAT is NOT necessary is you are displaying a list which will not change...
+(...which, obviously, eliminates the very *consideration* of even using NG-REPEAT in the first place.)
+...but even THEN, NG-repeat can still be *useful* in two cases:
+1) if the unchanging list is really large, at which point you gain ease-of-coding and neater HTML at the expense of a single $watch, and
+2) if exposing a scope will make display of units *inside* of that unchanging list easier.
+>>
+
+So...
+It seems that VALUE and COLUMN limits, and PAGINATED display of ROWS is the only proper solution to preventing the possibility of a monstrous $DIGEST cycle.
+
+So, I should...
+Install COLUMN, VALUE, and ROW limits based upon my stress tests.
+

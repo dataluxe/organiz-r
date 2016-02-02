@@ -3,6 +3,7 @@
 <head>
     <meta name="Ograniz-r" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="../vendor/jQuery/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="../vendor/angular/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
@@ -44,54 +45,63 @@ At the end, separate pages out into directives if desired for cleanliness.
 
 
 <!--Main container for Entry Grid-->
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="TableController as table">
 
-        <table class="table" ng-controller="TableController as table">
+        <table class="table">
             <tr>
                 <th></th>
 
-                <th ng-repeat="heading in table.cubeProperties">
+                <th ng-repeat="heading in table.cubeProperties track by $index">
                     {{heading}}
-                    <span class="btn btn-xs btn-danger pull-left" ng-click="table.columnRemove()"><span class="glyphicon glyphicon-remove"></span></span>
-                </th> <!--Columns Here - ng-repeat'd per The Cube-->
+                    <span class="btn btn-xs btn-danger pull-left" ng-click="table.columnRemove(heading)"><span class="glyphicon glyphicon-remove"></span></span>
+                    <!--columnRemove will remove the selected value from cubeProperties, and the likely-named PROPERTY ("Column") from each OBJECT ("Row") in the Cube-->
+                </th>
 
                 <th>
                     <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon" ng-click="table.columnAdd()"><span class="glyphicon glyphicon-plus"></span></span>
+                        <input type="text" class="form-control" ng-model="newColumn">
+                        <span class="input-group-addon" ng-click="table.columnAdd(newColumn)"><span class="glyphicon glyphicon-plus"></span></span>
+                        <!--columnAdd will add the entered value (Property-Validated) to cubeProperties, and a likely-named PROPERTY ("Column") to each OBJECT ("Row") in the Cube, with an empty array as their companion value-->
                     </div>
                 </th>
             </tr>
 
-            <tr ng-repeat="row in table.cube">
-                <td><div class="btn btn-danger" ng-click="table.rowRemove()"><span class="glyphicon glyphicon-remove"></span></div></td>
-                <td ng-repeat="(key, cell) in row">
+            <tr ng-repeat="row in table.cube track by $index">
+                <td><div class="btn btn-danger" ng-click="table.rowRemove(row)"><span class="glyphicon glyphicon-remove"></span></div></td>
+                <!--rowRemove will remove the selected object ("Row") from The Cube-->
+                <td ng-repeat="(key, cell) in row track by $index">
 
-                    <div ng-repeat="value in cell" class="btn btn-sm btn-default">
+                    <div ng-repeat="value in cell track by $index" class="btn btn-sm btn-default">
                         {{value}}
-                        <div class="btn btn-xs btn-danger" ng-click="table.cellRemoveValue()"><span class="glyphicon glyphicon-remove"></span></div>
+                        <div class="btn btn-xs btn-danger" ng-click="table.cellRemoveValue(row, cell, value)"><span class="glyphicon glyphicon-remove"></span></div>
+                        <!--cellRemoveValue will remove the target VALUE from the ARRAY ("Cell") of the target PROPERTY ("Column") in target OBJECT ("Row") in The Cube-->
                     </div>
 
                     <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon" ng-click="table.cellAddValue()"><span class="glyphicon glyphicon-plus"></span></span>
+                        <input type="text" class="form-control" ng-model="newValue">
+                        <span class="input-group-addon" ng-click="table.cellAddValue(newValue, cell);newValue=''"><span class="glyphicon glyphicon-plus"></span></span>
+                        <!--cellAddValue will add the target VALUE to the ARRAY ("Cell") of the target PROPERTY ("Column") in target OBJECT ("Row") in The Cube-->
                     </div>
 
                 </td>
 
             </tr>
 
-            <tr>
+            <tr id="newRow">
                 <td><span class="btn btn-success">New Item:</span></td>
+                <!--Paired with rowAddNewRow, below - alternately, a blank OBJECT ("Row") can be added be pressing this button.-->
                 <td ng-repeat="property in table.cubeProperties">
                     <div class="input-group">
                         <input type="text" class="form-control">
-                        <span class="input-group-addon" ng-click="table.rowAddNewRow()"><span class="glyphicon glyphicon-plus"></span></span>
+                        <span class="input-group-addon" ng-click="table.rowAddNewRowData()"><span class="glyphicon glyphicon-plus"></span></span>
+                        <!--rowAddNewRow will add a new OBJECT ("Row") to The Cube, with any VALUES entered in the cell input boxes added in their respective PROPERTIES ("Columns")-->
                     </div>
                 </td>
             </tr>
 
         </table>
+
+    {{table.cube | json}}
 
 </div>
 

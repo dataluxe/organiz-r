@@ -5,7 +5,7 @@ Left:
 - Query: Changes main view to 'Search Grid'
 Right:
 - Save: Saves changes to file.
-- Open: Prompt for save [Yes: Save | No: Proceed], Changes main view to 'Start Screen', Opens browser [Failure: Message, Return to 'Start Screen' | Success: Load and switch to Entry Grid]
+- Open: Prompt for save [Yes: Save | No: Proceed], Changes main view to 'Start Screen', Opens browser -> Select File: [Failure: Message, Return to 'Start Screen' | Success: Load and switch to Entry Grid]
 - New: Prompt for save [Yes: Save | No: Proceed], creates new empty OGR, changes view to 'Entry Grid'.
 - Close: Prompt for save [Yes: Save | No: Proceed] Changes Main view to 'Start Screen'
 
@@ -50,7 +50,7 @@ Authentication System, OGR Database in AWS. UI in OGR to select from server, sav
 
 Full App. (Performance problem solved.)
 Custom Bootstrap.
-Full aminations.
+Full animations.
 Sexy Three-Screen UI.
 Authentication.
 Selection of project from server.
