@@ -5,109 +5,185 @@
     <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
     <script type="text/javascript" src="../vendor/jQuery/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="../vendor/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../vendor/underscorejs/underscore.1.8.3.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/services/CubeService.js"></script>
+    <script type="text/javascript" src="js/services/LoadService.js"></script>
+    <script type="text/javascript" src="js/directives/loadButtonDir.js"></script>
 </head>
 <!--TDO Meta tags in head. https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta-->
 <!--TDO Title tag in head.-->
 
 <body ng-app="organizr">
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<div ng-controller="MainViewController as mainView"> <!--Main un-styled div to hold MainViewController-->
 
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Organiz-r</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-click="mainView.adjustView('home')">Organiz-r</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a ng-click="mainView.adjustView('edit')">Edit</a></li>
+                <li><a ng-click="mainView.adjustView('query')">Query</a></li>
+                <li><a ng-click="mainView.adjustView('save')">Save</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" ng-click="mainView.triggerLoad()">Open</a></li>
+                <li><a href="#" ng-click="mainView.triggerNew()">New</a></li>
+            </ul>
+
         </div>
-
-        <ul class="nav navbar-nav">
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">Query</a></li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Save</a></li>
-            <li><a href="#">Open</a></li>
-            <li><a href="#">New</a></li>
-            <li><a href="#">Close</a></li>
-        </ul>
-
-    </div>
-</nav>
-
-<!--
-App is simple enough that everything can be stored on the root scope.
-For now, start by putting everything inside index.html.
-If a requisite amount of semantic structure presents itself, split elements out into directives as necessary.
-At the end, separate pages out into directives if desired for cleanliness.
--->
-
-<!--<div class="container-fluid"></div> <!--Main container for Start Page - ng-show later-->
+    </nav>
 
 
-<!--Main container for Entry Grid-->
-<div class="container-fluid" ng-controller="TableController as table">
 
-        <table class="table">
-            <tr>
-                <th></th>
+    <div ng-switch="mainView.view">
 
-                <th ng-repeat="heading in table.cubeProperties track by $index">
-                    {{heading}}
-                    <span class="btn btn-xs btn-danger pull-left" ng-click="table.columnRemove(heading)"><span class="glyphicon glyphicon-remove"></span></span>
-                    <!--columnRemove will remove the selected value from cubeProperties, and the likely-named PROPERTY ("Column") from each OBJECT ("Row") in the Cube-->
-                </th>
+        <!--Begin 'home' view-->
+        <div ng-switch-when="home">
+            <div class="container">
+                <div class="jumbotron text-center">
+                    <h1>Organiz-r</h1>
+                    <h3>Tabular thought organizer</h3>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6 text-center">
+                            <div class="btn btn-lg btn-primary">New</div>
+                        </div>
 
-                <th>
-                    <div class="input-group">
-                        <input type="text" class="form-control" ng-model="newColumn">
-                        <span class="input-group-addon" ng-click="table.columnAdd(newColumn)"><span class="glyphicon glyphicon-plus"></span></span>
-                        <!--columnAdd will add the entered value (Property-Validated) to cubeProperties, and a likely-named PROPERTY ("Column") to each OBJECT ("Row") in the Cube, with an empty array as their companion value-->
+                        <div class="col-lg-6 text-center">
+                            <div class="btn btn-lg btn-primary">Open</div>
+                        </div>
                     </div>
-                </th>
-            </tr>
-
-            <tr ng-repeat="row in table.cube track by $index">
-                <td><div class="btn btn-danger" ng-click="table.rowRemove(row)"><span class="glyphicon glyphicon-remove"></span></div></td>
-                <!--rowRemove will remove the selected object ("Row") from The Cube-->
-                <td ng-repeat="(key, cell) in row track by $index">
-
-                    <div ng-repeat="value in cell track by $index" class="btn btn-sm btn-default">
-                        {{value}}
-                        <div class="btn btn-xs btn-danger" ng-click="table.cellRemoveValue(row, cell, value)"><span class="glyphicon glyphicon-remove"></span></div>
-                        <!--cellRemoveValue will remove the target VALUE from the ARRAY ("Cell") of the target PROPERTY ("Column") in target OBJECT ("Row") in The Cube-->
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <div class="btn btn-lg btn-primary">About</div>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!--End 'home' view-->
 
-                    <div class="input-group">
-                        <input type="text" class="form-control" ng-model="newValue">
-                        <span class="input-group-addon" ng-click="table.cellAddValue(newValue, cell);newValue=''"><span class="glyphicon glyphicon-plus"></span></span>
-                        <!--cellAddValue will add the target VALUE to the ARRAY ("Cell") of the target PROPERTY ("Column") in target OBJECT ("Row") in The Cube-->
-                    </div>
+        <!--Begin 'edit' view-->
+        <div class="container-fluid" ng-switch-when="edit" ng-controller="EditController as edit">
 
-                </td>
+            <button class="btn btn-primary" ng-click="edit.cs.mockAddToCube()">Add To Cube</button>
 
-            </tr>
+            <table class="table">
+                <tr>
+                    <th></th>
 
-            <tr id="newRow">
-                <td><span class="btn btn-success">New Item:</span></td>
-                <!--Paired with rowAddNewRow, below - alternately, a blank OBJECT ("Row") can be added be pressing this button.-->
-                <td ng-repeat="property in table.cubeProperties">
-                    <div class="input-group">
+                    <th ng-repeat="heading in edit.cs.cubeProperties track by $index">
+                        {{heading}}
+                        <span class="btn btn-xs btn-danger pull-left" ng-click="edit.cs.columnRemove(heading)"><span class="glyphicon glyphicon-remove"></span></span>
+                    </th>
+
+                    <th>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="newColumn">
+                            <span class="input-group-addon" ng-click="edit.cs.columnAdd(newColumn)"><span class="glyphicon glyphicon-plus"></span></span>
+                            </div>
+                    </th>
+                </tr>
+
+                <tr ng-repeat="row in edit.cs.cube track by $index">
+                    <td><div class="btn btn-danger" ng-click="edit.cs.rowRemove(row)"><span class="glyphicon glyphicon-remove"></span></div></td>
+                    <td ng-repeat="(key, cell) in row track by $index">
+
+                        <div ng-repeat="value in cell track by $index" class="btn btn-sm btn-default">
+                            {{value}}
+                            <div class="btn btn-xs btn-danger" ng-click="edit.cs.cellRemoveValue(row, cell, value)"><span class="glyphicon glyphicon-remove"></span></div>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="newValue">
+                            <span class="input-group-addon" ng-click="edit.cs.cellAddValue(newValue, cell);newValue=''"><span class="glyphicon glyphicon-plus"></span></span>
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <tr id="newRow">
+                    <td><span class="btn btn-success">New Item:</span></td>
+                    <td ng-repeat="property in edit.cs.cubeProperties">
+                        <div class="input-group">
+                            <input type="text" class="form-control">
+                            <span class="input-group-addon" ng-click="edit.cs.rowAddNewRowData()"><span class="glyphicon glyphicon-plus"></span></span>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+            {{edit.cs.cubeProperties | json}}
+
+            <br>
+
+            {{edit.cs.cube | json}}
+
+        </div>
+        <!--End 'edit' view-->
+
+        <!--Begin 'query' view-->
+        <div class="container-fluid" ng-switch-when="query" ng-controller="QueryController as query">
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" ng-click="query.applySearch()">Search</button>
+                <button type="button" class="btn btn-default" ng-click="query.resetSearch()">Reset</button>
+            </div>
+
+            <table class="table">
+                <tr id="searchRow">
+                    <th ng-repeat="heading in query.cs.cubeProperties track by $index">
+                        {{heading}}
                         <input type="text" class="form-control">
-                        <span class="input-group-addon" ng-click="table.rowAddNewRowData()"><span class="glyphicon glyphicon-plus"></span></span>
-                        <!--rowAddNewRow will add a new OBJECT ("Row") to The Cube, with any VALUES entered in the cell input boxes added in their respective PROPERTIES ("Columns")-->
-                    </div>
-                </td>
-            </tr>
+                    </th>
+                </tr>
 
-        </table>
+                <tr ng-repeat="row in query.returnCube track by $index">
+                    <td ng-repeat="(key, cell) in row track by $index">
+                        <div ng-repeat="value in cell track by $index" class="btn btn-sm btn-default">
+                            {{value}}
+                        </div>
+                    </td>
+                </tr>
 
-    {{table.cube | json}}
+            </table>
 
-</div>
+        </div>
+        <!--End 'query' view-->
+
+        <!--Begin 'save' view-->
+        <div class="container-fluid" ng-switch-when="save" ng-controller="SaveController as save">
+            <button class="btn btn-lg btn-default" ng-click="save.cs.validateCube(save.cs.cube)">Validate</button>
+            <br>
+            <textarea ng-bind="save.cubeInText()" rows="30" cols="22"></textarea>
+        </div>
+        <!--End 'save' view-->
+
+        <!--Begin 'test' view-->
+        <div class="container-fluid" ng-switch-when="test" ng-controller="TestController"></div>
+        <!--End 'test' view-->
+
+        <!--Begin 'default' view-->
+        <div ng-switch-default>
+            <h1>You're.... not supposed to be able to see this</h1>
+        </div>
+        <!--End 'default' view-->
 
 
+    </div> <!-- End main viewport div-->
 
-<!--<div class="container-fluid"></div> <!--Main container for Query - ng-show later-->
+</div> <!-- End MainViewController wrapper div-->
+
+<div load-button></div>
 
 </body>
 
