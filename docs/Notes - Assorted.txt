@@ -25,8 +25,8 @@ Cleanup:
 -Revisit Edit Grid:
   Add-Column rollout panel.
   Collapse Row-Delete, Add-Column columns.
-  Table x-y plugin. (Headers, New-Row, Row-Delete Column, Add-Column sticky)
-  Add
+  Table x-y plugin. (Headers, New-Row, Row-Delete Column, Add-Column sticky) [http://joshondesign.com/2015/05/23/csstable]
+
 -----------------------------------------------------------------------------
 
 Node:
@@ -61,50 +61,71 @@ CSS overhaul.
 -- DISCUSSIONS --
 -----------------
 
+----------------------
+Ideal UI for Edit Grid
+
+Table Scroll
+> Delete Column frozen.
+> Header column stays upon vertical scroll, tracks upon horizontal scroll.
+So, that means:
+> Main 'Data' Cells scroll horizontally and vertically as a group.
+
+New Column:
+> Fixed New Column popout [wherever appropriate]. Click, fixed dialog comes up. Enter column name, submit. Column added and closed. Error? Error displayed in box. Clickoff? Close.
+
+New Row:
+> Fixed to bottom.
+
+Value Tiles:
+> Open: Displayed As-Is, up to max (with tooltip)
+> Closed: Displayed All-Equal.
+
+Table Generals:
+> Open Vs Closed State infrastructure.
+> Draggable Columns
+> Draggable Rows
+> Pagination at bottom
+> Resizable Columns (to min, max)
+> No 'Delete' or 'Add' buttons - all done with Clicks-and-Keys
+> Properly-colored Phantom Tooltips ("Ctrl + Left Click to Delete", "Enter to Add Value") to indicate actions that replace buttons.
+
 ------------------------
 Edit Grid CSS Todo list:
+
+https://www.smashingmagazine.com/2013/03/customizing-bootstrap/
+https://bootstrapbay.com/blog/customize-bootstrap/
 
 Figure out what borders BS puts on tables / rows / in-vs-out-of-container, etc.
 Figure out TypeFace inheritance tree.
 
-Main Color Scheme:
-- Grey bg.
-- Shade of grey / color to distinguish Add-column column.
+Table: Investigate padding, margins.
+Header Cells: Investigate padding, margins.
+Header Cells: Dividers between - square.
+Header Cells: Delete Floated right.
+Header Cells: Content Centered Vertically
+Header Cells: Fixed width - enough for two tile cells per row in 'closed' mode.
 
-Header Cells:
-Dividers between - square.
-Delete Floated right.
-Investigate padding, (margins?).
-Centered Vertically
-++Typeface
+Delete-Row Column: Width to size of buttons.
+Delete-Row Column: Centered Vertically
 
-Delete-Row Column:
-Width to size of buttons.
-Centered Vertically
-Beautify.
+Value Cells: Put padding in between tiles.
+Value Cells: Change to button-groups.
+Value Cells: Max width - width to fit inside column. Tooltip.
+Value Cells: New-Value input (Either | Floated to bottom | OR | last value tile in stack)
 
-General Column Rules:
-Fixed width - enough for two tile cells per row in 'closed' mode.
+New-Item Row: Change "new item" to look like text / message, not a button.
 
-Value Cells:
-Both:
-Beautify - remove padding inside value tiles, add margin to outside. Typeface. Make buttons attractive.
+Delete-Row Column: Beautify.
+Value Cells: Beautify - remove padding inside value tiles, add margin to outside. Typeface. Make buttons attractive.
+Header Cells: Beautify.
+Colors: Add simple colors to beautify.
 
-Closed State:
-No Delete Buttons Per Value Tile.
-No New-Value input field.
-Static Value Tile width: Two tiles per row - tooltips to see full value.
-Grey'd Out.
-Either | Vertically shrunk to two lines | OR | bar across bottom of row to expand.
-
-Open State:
-Delete buttons, New-Value input rendered.
-New-Value input (Either | Floated to botton | OR | last value tile in stack)
-Only max width for Value Tile w/ tooltip.
-No Row height Restrictions.
-
-New Item row:
-Change "new item" to look like text / message, not a button.
+TODO: Value Cells (Closed State): (On Hold)
+Value Cells (Closed): No Delete Buttons Per Value Tile.
+Value Cells (Closed): No New-Value input field.
+Value Cells (Closed): Static Value Tile width: Two tiles per row - tooltips to see full value.
+Value Cells (Closed): Grey'd Out.
+Value Cells (Closed): Either | Vertically shrunk to two lines | OR | bar across bottom of row to expand.
 
 --------------------------------
 Hotkeys for Cell Value deletion:

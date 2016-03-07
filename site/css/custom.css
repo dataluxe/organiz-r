@@ -1,0 +1,79 @@
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-bottom: 2px solid #eee;
+    border-radius: 0;
+}
+
+/*Edit Table declaration block*/
+
+#edit-grid-container {
+    display:block;
+    overflow: scroll;
+}
+
+#editTable {
+    table-layout:fixed;
+}
+
+#editTable td {
+    padding: 0;
+}
+
+#editTable td.data-cells {
+    position: relative;
+    padding: 2px;
+}
+
+#editTable .table-v-align-mid {
+    vertical-align: middle;
+}
+
+#editTable .data-header {
+    width: 318px;
+    background-color: #eee;
+    padding: 8px;
+}
+
+#editTable .row-delete-header {
+    width: 32px;
+}
+
+#editTable .left-column-cells {
+    vertical-align: middle;
+    text-align: center;
+}
+
+#editTable .new-row-cells {
+    background-color: #fafafa;
+}
+
+#editTable .value-tiles-wrapper {
+    display: block;
+    position: relative;
+    margin-bottom: 38px;
+}
+
+#editTable .value-tiles {
+    margin: 2px;
+}
+
+#editTable .new-value-inputs {
+    vertical-align: bottom;
+}
+
+#editTable .input-group {
+    position: absolute;
+    bottom: 0;
+    width: 308px;
+    margin: 2px;
+    margin-bottom: 4px;
+}
+
+#editTable .input-group > .input-group-addon {
+    color: #FFFFFF;
+    background-color: #C0F0C0;
+    border-color: #98D998;
+}

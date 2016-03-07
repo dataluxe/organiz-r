@@ -3,6 +3,7 @@
 <head>
     <meta name="Ograniz-r" charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
     <script type="text/javascript" src="../vendor/jQuery/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="../vendor/angular/angular.min.js"></script>
     <script type="text/javascript" src="../vendor/underscorejs/underscore.1.8.3.js"></script>
@@ -71,62 +72,73 @@
         <!--End 'home' view-->
 
         <!--Begin 'edit' view-->
-        <div class="container-fluid" ng-switch-when="edit" ng-controller="EditController as edit">
+        <div ng-switch-when="edit" ng-controller="EditController as edit">
 
-            <button class="btn btn-primary" ng-click="edit.cs.mockAddToCube()">Add To Cube</button>
+            <!--<div id="edit-grid-container">-->
 
-            <table class="table">
-                <tr>
-                    <th></th>
+                <table id="editTable" class="table table-bordered">
+                    <tr>
+                        <th class="row-delete-header"></th>
 
-                    <th ng-repeat="heading in edit.cs.cubeProperties track by $index">
-                        {{heading}}
-                        <span class="btn btn-xs btn-danger pull-left" ng-click="edit.cs.columnRemove(heading)"><span class="glyphicon glyphicon-remove"></span></span>
-                    </th>
+                        <th class="data-header" ng-repeat="heading in edit.cs.cubeProperties track by $index">
+                            {{heading}}
+                            <span class="glyphicon glyphicon-remove text-danger pull-right" ng-click="edit.cs.columnRemove(heading)"></span>
+                        </th>
 
-                    <th>
-                        <div class="input-group">
-                            <input type="text" class="form-control" ng-model="newColumn">
-                            <span class="input-group-addon" ng-click="edit.cs.columnAdd(newColumn)"><span class="glyphicon glyphicon-plus"></span></span>
+                        <!--
+                        <th>
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="newColumn">
+                                <span class="input-group-addon" ng-click="edit.cs.columnAdd(newColumn)"><span class="glyphicon glyphicon-plus"></span></span>
+                                </div>
+                        </th>
+                        -->
+                    </tr>
+
+                    <tr ng-repeat="row in edit.cs.cube track by $index">
+
+                        <td class="btn-danger left-column-cells">
+                            <span class="glyphicon glyphicon-remove" ng-click="edit.cs.rowRemove(row)"></span>
+                        </td>
+
+                        <td class="data-cells" ng-repeat="(key, cell) in row track by $index">
+
+                            <div class="value-tiles-wrapper">
+
+                                <div ng-repeat="value in cell track by $index" class="btn btn-sm btn-default value-tiles">
+                                    {{value}}
+                                    <span class="glyphicon glyphicon-remove text-danger" ng-click="edit.cs.cellRemoveValue(row, cell, value)"></span>
+                                </div>
+
                             </div>
-                    </th>
-                </tr>
 
-                <tr ng-repeat="row in edit.cs.cube track by $index">
-                    <td><div class="btn btn-danger" ng-click="edit.cs.rowRemove(row)"><span class="glyphicon glyphicon-remove"></span></div></td>
-                    <td ng-repeat="(key, cell) in row track by $index">
+                            <div class="input-group new-value-inputs">
+                                <input type="text" class="form-control" ng-model="newValue">
+                                <span class="input-group-addon" ng-click="edit.cs.cellAddValue(newValue, cell);newValue=''"><span class="glyphicon glyphicon-plus"></span></span>
+                            </div>
 
-                        <div ng-repeat="value in cell track by $index" class="btn btn-sm btn-default">
-                            {{value}}
-                            <div class="btn btn-xs btn-danger" ng-click="edit.cs.cellRemoveValue(row, cell, value)"><span class="glyphicon glyphicon-remove"></span></div>
-                        </div>
+                        </td>
 
-                        <div class="input-group">
-                            <input type="text" class="form-control" ng-model="newValue">
-                            <span class="input-group-addon" ng-click="edit.cs.cellAddValue(newValue, cell);newValue=''"><span class="glyphicon glyphicon-plus"></span></span>
-                        </div>
+                    </tr>
 
-                    </td>
+                    <tr id="newRow">
 
-                </tr>
+                        <td class="btn-success left-column-cells">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </td>
 
-                <tr id="newRow">
-                    <td><span class="btn btn-success">New Item:</span></td>
-                    <td ng-repeat="property in edit.cs.cubeProperties">
-                        <div class="input-group">
-                            <input type="text" class="form-control">
-                            <span class="input-group-addon" ng-click="edit.cs.rowAddNewRowData()"><span class="glyphicon glyphicon-plus"></span></span>
-                        </div>
-                    </td>
-                </tr>
+                        <td class="new-row-cells" ng-repeat="property in edit.cs.cubeProperties">
+                            <div class="input-group">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon" ng-click="edit.cs.rowAddNewRowData()"><span class="glyphicon glyphicon-plus"></span></span>
+                            </div>
+                        </td>
+                    </tr>
 
-            </table>
+                </table>
 
-            {{edit.cs.cubeProperties | json}}
+            <!--</div>-->
 
-            <br>
-
-            {{edit.cs.cube | json}}
 
         </div>
         <!--End 'edit' view-->
@@ -165,6 +177,12 @@
             <button class="btn btn-lg btn-default" ng-click="save.cs.validateCube(save.cs.cube)">Validate</button>
             <br>
             <textarea ng-bind="save.cubeInText()" rows="30" cols="22"></textarea>
+
+            <br>
+            {{save.cs.cubeProperties | json}}
+            <br>
+            {{save.cs.cube | json}}
+
         </div>
         <!--End 'save' view-->
 

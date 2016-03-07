@@ -210,15 +210,6 @@ angular.module('organizr')
 
         }
 
-        , mockFillCube : function(){
-            //temporary function to test directiveTestDir. Remove when testing is done.
-            this.cube = [{"aaa":["Й£¥§Ц", "Й£¥§Ц", "Й£¥§Ц"]}, {"bbb":["Й£¥§Ц", "Й£¥§Ц", "Й£¥§Ц"]}, {"ccc":["Й£¥§Ц", "Й£¥§Ц", "Й£¥§Ц"]}, {}]
-        }
-
-        , mockAddToCube : function(){
-            this.cube.splice(0, 0, {"aaa":["Й£¥§Ц", "Й£¥§Ц", "Й£¥§Ц"], "bbb":["Й£¥§Ц", "Й£¥§Ц", "Й£¥§Ц"], "ccc":["Й£¥§Ц", "Й£¥§Ц", "Й£¥§Ц"]})
-        }
-
         , isCubeChanged : function () {
             return _.isEqual(this.oldCube, this.cube)
         }
